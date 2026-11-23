@@ -1,0 +1,45 @@
+[project]
+name = "LANG-TEST"
+version = "0.1.0"
+description = "LANG-TEST"
+requires-python = ">=3.14"
+dependencies = [
+    "python-dotenv>=1.2.3",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.0",
+    "pytest>=8.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.uv]
+package = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.14"
+files = "src"
+exclude = "(venv|\\.venv)"
+
+# ---------------------------------------------------------------------------
+# Optional uv scripts (like npm run). Uncomment [tool.uv.scripts] to use them
+# instead of — or alongside — the Makefile. Run from repo root:
+#   uv run dev
+#   uv run test
+#   uv run mypy
+# Install deps has no script; use:  uv sync --all-groups  (same as make sync)
+# ---------------------------------------------------------------------------
+# [tool.uv.scripts]
+# dev_fastapi = "uvicorn outreach.fast_api.main_fast_api:app --reload --host 127.0.0.1 --port 8000"
+# test = "pytest"
+# mypy = "mypy"
