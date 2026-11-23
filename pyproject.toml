@@ -27,7 +27,6 @@ package = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["lessons/00_system_check", "lessons/03_functions_vs_tools"]
 
 [tool.mypy]
 python_version = "3.14"

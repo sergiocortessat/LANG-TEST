@@ -1,4 +1,4 @@
-from check_env import model_is_available
+from src.check_env import model_is_available
 
 
 def test_exact_name_matches() -> None:

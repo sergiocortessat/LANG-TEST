@@ -5,7 +5,7 @@ Run from the repo root:
     make lesson-2
 """
 
-from parse_invoice import INVOICE_PROMPT, parse_invoice
+from src.parse_invoice import INVOICE_PROMPT, parse_invoice
 from src.schemas import SAMPLE_INVOICE_TEXT
 
 

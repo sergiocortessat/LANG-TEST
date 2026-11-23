@@ -31,8 +31,6 @@ def parse_invoice(invoice_text: str) -> Invoice:
     model = get_chat_model().with_structured_output(Invoice)
     messages = INVOICE_PROMPT.invoke({"invoice_text": invoice_text})
     result = model.invoke(messages)
-    print(f"result: {result}")
-    print("--------------------------------")
     if not isinstance(result, Invoice):
         raise TypeError(f"Expected Invoice, got {type(result).__name__}: {result!r}")
     return result

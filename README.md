@@ -40,9 +40,16 @@ make lesson-2
 
 Turns the sample Flower Export invoice into a Pydantic `Invoice` object (fields, not a paragraph).
 
+## Stage 3 — Python function vs LangChain tool
+
+```bash
+make lesson-3
+```
+
+`is_overdue` is a normal function we call. `lookup_supplier` is a tool the model may request.
+
 ## Later stages (not built yet)
 
-3. Python functions vs LangChain tools
 4. LangGraph
 5. MCP filesystem tools
 6. LangSmith tracing

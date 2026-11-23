@@ -1,10 +1,6 @@
 {
-  "include": ["src", "tests"],
+  "include": ["src"],
   "exclude": ["venv", ".venv", "archive", "**/__pycache__"],
-  "extraPaths": [
-    "lessons/00_system_check",
-    "lessons/03_functions_vs_tools"
-  ],
   "typeCheckingMode": "basic",
   "venvPath": ".",
   "venv": ".venv",
