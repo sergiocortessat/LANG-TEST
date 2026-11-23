@@ -5,7 +5,9 @@ Run from the repo root:
     make lesson-3
 """
 
-from langchain.messages import HumanMessage, SystemMessage
+from datetime import date
+
+from langchain.messages import HumanMessage, SystemMessage, ToolMessage
 
 from src.llm import get_chat_model
 from src.rules import is_overdue
@@ -21,7 +23,7 @@ def main() -> None:
         invoice_number="INV-1024",
         amount=2500,
         currency="EUR",
-        due_date="2024-06-01",
+        due_date=date(2024, 6, 1),
         description="Flower shipment",
     )
 
@@ -35,39 +37,52 @@ def main() -> None:
     print("  No Ollama. No LangChain. Just dates.")
     print()
 
-    print("PART B — a tool. The model may *request* it.")
+    print("PART B — first invoke. The model may *request* a tool (content often empty).")
     model = get_chat_model().bind_tools([lookup_supplier])
-    response = model.invoke(
-        [
-            SystemMessage(
-                "You look up suppliers. If you need registry data, "
-                "call lookup_supplier. Do not invent payment terms."
-            ),
-            HumanMessage(
-                f"What are the payment terms for {invoice.supplier}?"
-            ),
-        ]
-    )
+    messages: list = [
+        SystemMessage(
+            "You look up suppliers. If you need registry data, "
+            "call lookup_supplier. Do not invent payment terms."
+        ),
+        HumanMessage(f"What are the payment terms for {invoice.supplier}?"),
+    ]
+    first = model.invoke(messages)
 
-    print(f"  response type : {type(response).__name__}")
-    print(f"  content       : {response.content!r}")
-    print(f"  tool_calls    : {response.tool_calls}")
+    print(f"  response type : {type(first).__name__}")
+    print(f"  content       : {first.content!r}")
+    print(f"  tool_calls    : {first.tool_calls}")
     print()
 
-    if not response.tool_calls:
+    if not first.tool_calls:
         print("  The model answered in text and did not request the tool.")
         print("  That can happen with local models. The important idea:")
         print("  a tool_call is a *request*, not the function already running.")
         return
 
     print("PART C — we run the tool ourselves (the model cannot).")
-    for tool_call in response.tool_calls:
+    messages.append(first)
+    for tool_call in first.tool_calls:
         print(f"  requested: {tool_call['name']}({tool_call['args']})")
         result = lookup_supplier.invoke(tool_call["args"])
         print(f"  result   : {result}")
-
+        # ToolMessage = "here is what that function returned"
+        messages.append(
+            ToolMessage(
+                content=result,
+                tool_call_id=tool_call["id"],
+                name=tool_call["name"],
+            )
+        )
     print()
-    print("Reminder: is_overdue was our call. lookup_supplier was the model's ask.")
+
+    print('--------------------------------');
+    print(messages);
+    print('--------------------------------');
+
+    print("PART D — second invoke. Now the model can write a sentence using the result.")
+    final = model.invoke(messages)
+    print(f"  content : {final.content}")
+    print(f"  tool_calls this time : {final.tool_calls}")
 
 
 if __name__ == "__main__":
