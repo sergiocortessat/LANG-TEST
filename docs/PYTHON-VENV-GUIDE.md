@@ -9,8 +9,8 @@ Use this guide when you are unsure whether you are using **project Python** (`.v
 ```bash
 cd /Users/laburo/Documents/LANG-TEST
 
-make sync     # first time, or after pulling dependency changes
-make dev      # FastAPI at http://127.0.0.1:8000/docs
+make sync        # first time, or after pulling dependency changes
+make check-env   # Stage 0: project Python + Ollama
 ```
 
 You do **not** need to activate `.venv` if you use `make …` or `uv run …` (uv picks `.venv` for you).
@@ -21,9 +21,9 @@ You do **not** need to activate `.venv` if you use `make …` or `uv run …` (u
 
 | Piece | Role |
 |--------|------|
-| **`uv`** (global CLI) | Installed once on your machine (`~/.local/bin/uv`). Creates envs, installs deps, runs commands. **Not** the same as `pip install fastapi` globally. |
-| **`pyproject.toml`** | What this project **directly** depends on (e.g. FastAPI, uvicorn). Like `dependencies` in `package.json`. |
-| **`uv.lock`** | Exact versions of **every** package (including transitive deps like Pydantic). Like `package-lock.json`. **Commit this file.** |
+| **`uv`** (global CLI) | Installed once on your machine (`~/.local/bin/uv`). Creates envs, installs deps, runs commands. **Not** the same as `pip install` globally. |
+| **`pyproject.toml`** | What this project **directly** depends on. Like `dependencies` in `package.json`. |
+| **`uv.lock`** | Exact versions of **every** package (including transitive deps). Like `package-lock.json`. **Commit this file.** |
 | **`.venv/`** | Project-local Python + installed packages. Gitignored; recreated with `uv sync`. |
 
 Flow:
@@ -32,7 +32,7 @@ Flow:
 pyproject.toml  →  uv sync  →  .venv/ + uv.lock
 ```
 
-There is **no** `requirements.txt` in this project anymore.
+There is **no** `requirements.txt` in this project.
 
 ---
 
@@ -62,9 +62,9 @@ uv --version
 **Option A — recommended (no activation):**
 
 ```bash
-cd /Users/laburo/Documents/NEOLAND-BACKEDN-STUDY-PYTHON
-make dev
-# or: uv run python -m mypy src
+cd /Users/laburo/Documents/LANG-TEST
+make check-env
+# or: uv run python -m src.main
 ```
 
 **Option B — classic activate (optional):**
@@ -95,7 +95,7 @@ uv run which python
 **Good (this project):**
 
 ```text
-.../NEOLAND-BACKEDN-STUDY-PYTHON/.venv/bin/python
+.../LANG-TEST/.venv/bin/python
 ```
 
 **Bad (system — wrong for installed packages):**
@@ -137,6 +137,8 @@ From repo root:
 | Command | Action |
 |---------|--------|
 | `make sync` / `make install` | `uv sync --all-groups` |
+| `make check-env` | Stage 0: verify Ollama from project Python |
+| `make test` | `uv run pytest` |
 | `make help` | List targets |
 
 ---
@@ -164,10 +166,10 @@ uv sync --all-groups
 ## Cheat sheet
 
 ```bash
-cd /Users/laburo/Documents/NEOLAND-BACKEDN-STUDY-PYTHON
+cd /Users/laburo/Documents/LANG-TEST
 
 make sync
-make dev
+make check-env
 
 uv add httpx
 uv remove httpx
@@ -188,7 +190,7 @@ pyproject.toml  = package.json "dependencies"
 uv.lock         = lockfile
 .venv/          = node_modules (Python packages live here)
 
-make dev        = npm run dev
+make check-env  = npm run <script>
 uv add foo      = npm install foo --save
 uv sync         = npm ci / pnpm install
 ```

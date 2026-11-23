@@ -1,7 +1,7 @@
 [project]
 name = "LANG-TEST"
 version = "0.1.0"
-description = "LANG-TEST"
+description = "Staged lab: LangChain, LangGraph, MCP, and LangSmith via a small Invoice Assistant"
 requires-python = ">=3.14"
 dependencies = [
     "python-dotenv>=1.2.3",
