@@ -7,7 +7,7 @@ Use this guide when you are unsure whether you are using **project Python** (`.v
 ## Quick start (this repo)
 
 ```bash
-cd /Users/laburo/Documents/NEOLAND-BACKEDN-STUDY-PYTHON
+cd /Users/laburo/Documents/LANG-TEST
 
 make sync     # first time, or after pulling dependency changes
 make dev      # FastAPI at http://127.0.0.1:8000/docs
