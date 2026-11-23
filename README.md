@@ -24,10 +24,24 @@ Edit `OLLAMA_MODEL` in `.env` if you want to use `qwen2.5-coder:7b` instead of `
 
 Do **not** put API keys in git. `.env` is gitignored.
 
+## Stage 1 — LangChain talks to Ollama
+
+```bash
+make lesson-1
+```
+
+Sends one chat prompt through LangChain to your local Ollama model.
+
+## Stage 2 — prompts and structured output
+
+```bash
+make lesson-2
+```
+
+Turns the sample Flower Export invoice into a Pydantic `Invoice` object (fields, not a paragraph).
+
 ## Later stages (not built yet)
 
-1. LangChain talks to Ollama
-2. Prompts and structured output
 3. Python functions vs LangChain tools
 4. LangGraph
 5. MCP filesystem tools
