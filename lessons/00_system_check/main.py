@@ -4,7 +4,7 @@ Stage 0: environment check only.
 Later stages will replace this with the Invoice Assistant.
 """
 
-from src.check_env import main
+from check_env import main
 
 
 if __name__ == "__main__":
