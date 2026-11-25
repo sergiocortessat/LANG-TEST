@@ -334,6 +334,7 @@ source = { editable = "." }
 dependencies = [
     { name = "langchain" },
     { name = "langchain-ollama" },
+    { name = "langgraph" },
     { name = "python-dotenv" },
 ]
 
@@ -347,6 +348,7 @@ dev = [
 requires-dist = [
     { name = "langchain", specifier = ">=1.5.2" },
     { name = "langchain-ollama", specifier = ">=1.1.0" },
+    { name = "langgraph", specifier = ">=1.2.24" },
     { name = "python-dotenv", specifier = ">=1.2.3" },
 ]
 

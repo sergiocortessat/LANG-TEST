@@ -48,9 +48,16 @@ make lesson-3
 
 `is_overdue` is a normal function we call. `lookup_supplier` is a tool the model may request.
 
+## Stage 4 — LangGraph
+
+```bash
+make lesson-4
+```
+
+Runs parse → overdue check → follow-up (if late) or a short OK (if on time).
+
 ## Later stages (not built yet)
 
-4. LangGraph
 5. MCP filesystem tools
 6. LangSmith tracing
 7. Junior-facing guide
